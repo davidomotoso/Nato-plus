@@ -7,14 +7,13 @@
 }
 body {
   background-color: #1f1f1f;
-  padding: 0 8px;
 }
 header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-size: 1.7em;
   margin-bottom: 2em;
-  font-size: larger;
 }
 header ul {
   display: flex;
@@ -22,4 +21,34 @@ header ul {
   align-items: center;
   list-style: none;
   width: 15em;
+}
+.home {
+  width: 75em;
+  margin: 0 auto;
+}
+.home-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: relative;
+  right: 7vw;
+}
+.home-content figure,
+.home-content img {
+  height: 100%;
+}
+.home-content figure img {
+  width: 170%;
+  border-radius: 0.5em;
+  position: relative;
+  left: -3em;
+  object-fit: cover;
+  object-position: center;
+}
+.home-content div h1 {
+  font-size: 5em;
+  width: 3em;
+  position: relative;
+  z-index: 1;
 }
