@@ -1,3 +1,4 @@
+/* general styling */
 * {
   margin: 0;
   padding: 0;
@@ -8,6 +9,7 @@
 body {
   background-color: #1f1f1f;
 }
+/* Navigationn styling */
 header {
   display: flex;
   align-items: center;
@@ -22,7 +24,9 @@ header ul {
   list-style: none;
   width: 15em;
 }
-.home {
+/* Intro page styling */
+.home,
+.anime-content > section {
   width: 75em;
   margin: 0 auto;
 }
@@ -51,4 +55,64 @@ header ul {
   width: 3em;
   position: relative;
   z-index: 1;
+}
+
+/* Top anime content */
+.anime-content {
+  background-color: #008080;
+}
+.anime-content > section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100vh;
+}
+.anime-intro {
+  width: 14em;
+}
+.action-figure {
+  border-radius: 1em;
+  height: 20em;
+  width: 100%;
+  padding: 1em 0;
+}
+.action-figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+.comic-story {
+  font-size: 1.05em;
+  margin: 1em 0 1.5em;
+}
+.anime-intro button {
+  font-size: 1.3em;
+  background-color: #ff7300;
+  border: 0;
+  padding: 0.7em;
+  border-radius: 0 0.7em 0 0.7em;
+  box-shadow: 9px 10px 0 black;
+  transition: translate 200ms;
+  cursor: pointer;
+}
+.anime-intro button:hover {
+  translate: 2px 5px;
+}
+
+/* SuperHero styling */
+.wonder-woman {
+  background-color: #dfe216;
+}
+.superman {
+  background-color: #9b029b;
+}
+.batman {
+  background-color: #59e916;
+}
+.ironman {
+  background-color: #feba0c;
+}
+.captain-america {
+  background-color: #ff0055;
 }
