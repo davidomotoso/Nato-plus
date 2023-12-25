@@ -20,7 +20,7 @@ header {
   align-items: center;
   justify-content: space-between;
   font-size: 1.7em;
-  margin-bottom: 1em;
+  padding: 0.6em 0 2em;
 }
 header ul {
   display: flex;
@@ -29,25 +29,27 @@ header ul {
   list-style: none;
   width: 15em;
 }
+.title {
+  font-size: 1.5em;
+}
 /* Intro page styling */
 .bg-container {
   background-image: url("./assets/home-bg.gif");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  /* padding-bottom: 3em; */
 }
 .home-content {
   display: grid;
   place-items: center;
-  height: 100vh;
+  height: 99vh;
   width: 10em;
   opacity: 1;
 }
 .home-content div h1 {
   font-size: 6em;
   transition: 200ms;
-  animation: fade 2.5s linear infinite;
+  animation: fade 3.5s linear infinite;
 }
 /* Animation for fading in & out of the text */
 @keyframes fade {
@@ -76,8 +78,7 @@ header ul {
 .anime-intro {
   width: 13.5em;
 }
-.action-figure,
-.comic-image {
+.action-figure {
   height: 17.5em;
   width: 100%;
 }
@@ -116,6 +117,7 @@ header ul {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 3em;
+  padding-bottom: 2em;
 }
 .comic-intro {
   width: 16em;
@@ -130,4 +132,55 @@ header ul {
   padding: 0.7em 0.5em;
   border-radius: 0 0.7em 0 0.7em;
   box-shadow: 9px 10px 0 burlywood;
+}
+
+/* Responsiveness */
+/* Responsiveness for ipad */
+@media only screen and (max-width: 76em) {
+  /* General style */
+  header {
+    padding: 0.6em 1em 2em;
+  }
+  .home,
+  .anime-content > section {
+    width: 100%;
+  }
+
+  /*Comic style*/
+  .comic-content {
+    justify-content: space-around;
+    gap: 5em 0;
+  }
+  .comic-intro {
+    width: 25em;
+  }
+  .comic-image {
+    height: 25em;
+  }
+}
+/* Responsiveness for mobile */
+@media only screen and (max-width: 730px) {
+  /* General styling  */
+  header ul {
+    display: none;
+  }
+}
+@media only screen and (max-width: 440px) {
+  /* General styling */
+  .home {
+    padding: 0 1em;
+  }
+  header {
+    padding: 0.6em 0 2em;
+  }
+  /* Comic styling */
+  .comic-content {
+    gap: 7em 0;
+  }
+  .comic-intro {
+    width: 100%;
+  }
+  .comic-image {
+    height: 100%;
+  }
 }
