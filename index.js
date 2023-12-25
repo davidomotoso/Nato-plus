@@ -19,7 +19,7 @@ const loopAnime = (parentComponent, src, heading, id, classes) => {
           <section class="${header}">
           ${heading}
           </section>
-          <button>Read more</button>
+          <section><button>Read more</button></section>
         </section>
         `;
   parentComponent.innerHTML = html;
@@ -55,7 +55,7 @@ const loopComic = (parentComponent, src, heading, id, classes) => {
           <section class="${header}">
           ${heading}
           </section>
-          <button>Read more</button>
+          <section><button>Read more</button></section>
         </section>
         `;
   parentComponent.innerHTML = content;
