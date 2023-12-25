@@ -1,58 +1,80 @@
-// Making a dummy api for top trending comic
+const ts = 1701689634218;
+const publicKey = "02e1f0a2d49b93ccbd50739d6b726c5c";
+const hash = "e0d6a8e188272e010b434feb7a1444cb";
+const URL = `http://gateway.marvel.com/v1/public//series?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
 
 // getting DOM element
 const animeContainer = document.querySelector(".anime-content>section");
+const comicContent = document.querySelector(".comic-content");
+let html = "";
+let content = "";
 
-// Declaring comic array
-const comics = [
-  {
-    heading: " A comic story of wonder woman. A dummy project tho...",
-    src: "./assets/wonder woman.png",
-    figClass: "wonder-woman",
-    alt: "wonder woman image",
-  },
-  {
-    heading: " A comic story of superman. A dummy project tho...",
-    src: "./assets/superman.png",
-    figClass: "superman",
-    alt: "superman image",
-  },
-  {
-    heading: " A comic story of batman. A dummy project tho...",
-    src: "./assets/batman.png",
-    figClass: "batman",
-    alt: "batman image",
-  },
-  {
-    heading: " A comic story of ironman. A dummy project tho...",
-    src: "./assets/iron-man.png",
-    figClass: "ironman",
-    alt: "ironman image",
-  },
-  {
-    heading: " A comic story of captain america. A dummy project tho...",
-    src: "./assets/captain america.png",
-    figClass: "captain-america",
-    alt: "captain america image",
-  },
-];
-
-const loopComic = (parentComponent) => {
-  let html = "";
-  comics.forEach((comic) => {
-    html += `
-        <section class="anime-intro">
-          <figure class="action-figure ${comic.figClass}">
-            <img src="${comic.src}" alt="${comic.alt}"/>
+const loopAnime = (parentComponent, src, heading, id, classes) => {
+  const { parent, figure, header } = classes;
+  html += `
+        <section class="${parent}" id=${id}>
+          <figure class="${figure}">
+            <img src="${src.path}.${src.extension}" alt=""/>
           </figure>
-          <section class="comic-story">
-          ${comic.heading}
+          <section class="${header}">
+          ${heading}
           </section>
           <button>Read more</button>
         </section>
         `;
-  });
   parentComponent.innerHTML = html;
 };
 
-loopComic(animeContainer);
+// fetching data for top five comics
+const topAnime = async () => {
+  const data = await fetch(URL);
+  const response = await data.json();
+  const outcomes = response.data.results;
+  const slicedOutcomes = outcomes.slice(1, 6);
+
+  const classes = {
+    parent: "anime-intro",
+    figure: "action-figure",
+    header: "comic-desc",
+  };
+
+  slicedOutcomes.forEach((outcome) => {
+    const { title, thumbnail, id } = outcome;
+    loopAnime(animeContainer, thumbnail, title, id, classes);
+  });
+};
+topAnime();
+
+const loopComic = (parentComponent, src, heading, id, classes) => {
+  const { parent, figure, header } = classes;
+  content += `
+        <section class="${parent}" id=${id}>
+          <figure class="${figure}">
+            <img src="${src.path}.${src.extension}" alt=""/>
+          </figure>
+          <section class="${header}">
+          ${heading}
+          </section>
+          <button>Read more</button>
+        </section>
+        `;
+  parentComponent.innerHTML = content;
+};
+
+// fetching data for 20 comics
+const allComic = async () => {
+  const data = await fetch(URL);
+  const response = await data.json();
+  const outcomes = response.data.results;
+
+  const classes = {
+    parent: "comic-intro",
+    figure: "comic-image",
+    header: "comic-desc",
+  };
+  outcomes.forEach((outcome) => {
+    const { title, thumbnail, id } = outcome;
+    loopComic(comicContent, thumbnail, title, id, classes);
+  });
+};
+allComic();
