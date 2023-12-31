@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Personal Webpage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #f2f2f2;
+        }
+
+        section {
+            margin-top: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Your Name</h1>
+        <p>In the dance of life, I'm the storm that refuses to be tamed</p>
+    </header>
+
+    <section>
+        <h2>About Me</h2>
+        <p>Hello! I'm Ben. I'm into programming and currently working on a clock app. Join me in the journey of coding and creation.</p>
+    </section>
+
+    <section>
+        <h2>Projects</h2>
+        <p>I'm currently working on a clock app. Stay tuned for updates!</p>
+    </section>
+
+    <section>
+        <h2>Contact</h2>
+        <p>Feel free to reach out to me at benarmstrong026@gmail.com</p>
+    </section>
+
+</body>
+</html>
+u
