@@ -6,9 +6,35 @@ const URL = `https://gateway.marvel.com/v1/public//series?ts=${ts}&apikey=${publ
 // getting DOM element
 const animeContainer = document.querySelector(".anime-content>section");
 const comicContent = document.querySelector(".comic-content");
+const HEAD = document.head;
+
+// Declaring empty variable to be used later
 let html = "";
 let content = "";
 
+// head function
+const headContent = () => {
+  HEAD.innerHTML += `
+  <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+  `;
+};
+
+// hamburger function
+const hamburger = () => {
+  let menu = document.querySelector(".bi-list-nested");
+  let nav = document.querySelector("nav>ul");
+  menu.addEventListener("click", (e) => {
+    nav.classList.toggle("show");
+    nav.classList == "show"
+      ? (e.target.classList = "bi-x-circle")
+      : (e.target.classList = "bi-list-nested");
+
+    // nav.classList.contains("show")?nav.classList.add("new-nav"):nav.classList.add("")
+  });
+};
 const loopAnime = (parentComponent, src, heading, id, classes) => {
   const { parent, figure, header } = classes;
   html += `
@@ -43,7 +69,6 @@ const topAnime = async () => {
     loopAnime(animeContainer, thumbnail, title, id, classes);
   });
 };
-topAnime();
 
 const loopComic = (parentComponent, src, heading, id, classes) => {
   const { parent, figure, header } = classes;
@@ -77,4 +102,9 @@ const allComic = async () => {
     loopComic(comicContent, thumbnail, title, id, classes);
   });
 };
+
+// Calling out general functions here
+headContent();
+hamburger();
+topAnime();
 allComic();
