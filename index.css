@@ -29,12 +29,17 @@ header ul {
   list-style: none;
   width: 15em;
 }
+header ul li > a:hover {
+  color: #ff7300;
+  transition: color 200ms;
+}
 .title {
   font-size: 1.5em;
 }
 .bi-list-nested,
 .bi-x-circle {
   display: none;
+  cursor: pointer;
 }
 /* Intro page styling */
 .bg-container {
@@ -105,22 +110,10 @@ header ul {
   background-color: #ff7300;
   border: 0;
   padding: 0.7em;
-  border-radius: 0 0.7em 0 0em;
-  box-shadow: 12px 13px 2px #000000;
+  border-radius: 0 0.7em 0 0.7em;
+  box-shadow: 12px 14px 2px #000000;
   transition: translate 200ms;
   cursor: pointer;
-  position: relative;
-}
-.anime-intro button::before {
-  content: "";
-  position: absolute;
-  background-color: burlywood;
-  width: 100%;
-  height: 1em;
-  top: 2.5em;
-  left: 0.4em;
-  border-radius: 0 0 10px 5px;
-  transform: skew(42deg, 0deg);
 }
 .anime-intro button:hover {
   translate: 2px 5px;
@@ -216,19 +209,43 @@ header ul {
     font-size: 1.2em;
   }
   .show {
-    background: linear-gradient(160deg, #0000ff, #00008b);
+    /* background: linear-gradient(160deg, #0000ff, #00008b); */
     display: block;
     position: absolute;
     top: 2.1em;
     left: 0;
     width: 100%;
+    animation: flipper 5s linear infinite;
   }
+
+  /* animation for navbar */
+  @keyframes flipper {
+    0% {
+      background: linear-gradient(160deg, #0000ff, #00008b);
+    }
+    25% {
+      background: linear-gradient(70deg, #048b8b, #033279);
+    }
+    50% {
+      background: linear-gradient(250deg, #ffd700, #ad7712);
+    }
+    75% {
+      background: linear-gradient(100deg, #ffa500, #ff4500);
+    }
+    100% {
+      background: linear-gradient(160deg, #0000ff, #00008b);
+    }
+  }
+
   header ul li {
     padding: 0.3em 0 0.4em 1em;
     border-bottom: 2px solid #fff;
     border-radius: 2px;
     width: 100%;
     position: relative;
+  }
+  header ul li > a:hover {
+    color: #000000;
   }
 
   /* Intro page styling */
