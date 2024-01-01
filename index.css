@@ -93,7 +93,7 @@ header ul {
   height: 100%;
   object-fit: cover;
   object-position: 10% top;
-  box-shadow: 2px 3px 4px black;
+  box-shadow: 2px 3px 4px #000000;
 }
 .comic-desc {
   font-size: 1.05em;
@@ -105,10 +105,22 @@ header ul {
   background-color: #ff7300;
   border: 0;
   padding: 0.7em;
-  border-radius: 0 0.7em 0 0.7em;
-  box-shadow: 9px 10px 0 black;
+  border-radius: 0 0.7em 0 0em;
+  box-shadow: 12px 13px 2px #000000;
   transition: translate 200ms;
   cursor: pointer;
+  position: relative;
+}
+.anime-intro button::before {
+  content: "";
+  position: absolute;
+  background-color: burlywood;
+  width: 100%;
+  height: 1em;
+  top: 2.5em;
+  left: 0.4em;
+  border-radius: 0 0 10px 5px;
+  transform: skew(42deg, 0deg);
 }
 .anime-intro button:hover {
   translate: 2px 5px;
@@ -163,7 +175,8 @@ header ul {
   .anime-intro {
     width: 20em;
   }
-  .anime-intro > section {
+  .anime-intro > section:last-child,
+  .comic-intro > section:last-child {
     display: grid;
     place-items: center;
     width: 100%;
@@ -203,10 +216,8 @@ header ul {
     font-size: 1.2em;
   }
   .show {
-    background-color: #008080;
-    display: grid;
-    place-content: start;
-    place-items: center;
+    background: linear-gradient(160deg, #0000ff, #00008b);
+    display: block;
     position: absolute;
     top: 2.1em;
     left: 0;
@@ -214,7 +225,7 @@ header ul {
   }
   header ul li {
     padding: 0.3em 0 0.4em 1em;
-    border-bottom: 2px solid #a8aaa8;
+    border-bottom: 2px solid #fff;
     border-radius: 2px;
     width: 100%;
     position: relative;
@@ -226,6 +237,14 @@ header ul {
     flex-wrap: wrap;
     row-gap: 7em;
     padding: 0em 1em;
+  }
+  .home-content div h1 {
+    width: 100%;
+    font-size: 4em;
+  }
+  /* comic styling */
+  .comic-content {
+    margin-top: 3em;
   }
 }
 @media only screen and (max-width: 440px) {
