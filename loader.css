@@ -8,7 +8,7 @@
   margin: 0 auto;
   display: grid;
   place-items: center;
-  row-gap: 2em;
+  row-gap: 4.5em;
   --bgc-default: #817d7d;
 }
 .anime-intro-loader {
@@ -22,11 +22,11 @@
 }
 .anime-loader > div:first-child {
   width: 35em;
-  height: 4em;
+  height: 4.5em;
   border-radius: 1em;
   background-color: var(--bgc-default);
 }
-.anime-intro-loader > section section div:first-child {
+.anime-intro-loader > section div:first-child {
   height: 17.5em;
   width: 100%;
   background-color: var(--bgc-default);
@@ -34,25 +34,25 @@
   box-shadow: 2px 3px 4px #000000;
 }
 
-.anime-intro-loader > section section div:nth-child(2) {
+.anime-intro-loader > section div:nth-child(2) {
   width: 100%;
   height: 2.5em;
   background-color: var(--bgc-default);
   border-radius: 1em;
   margin: 1em 0;
 }
-.anime-intro-loader > section section div:last-child {
+.anime-intro-loader > section div:last-child {
   background-color: var(--bgc-default);
   width: 9.5em;
   height: 3.6em;
   border-radius: 0 0.7em 0 0.7em;
 }
-.anime-loader div:not(.anime-loader div:nth-child(2)) {
+.anime-loader div:not(.anime-loader > div:nth-child(2)) {
   transition: 100ms;
   overflow: hidden;
   position: relative;
 }
-.anime-loader div:not(.anime-loader div:nth-child(2)):before {
+.anime-loader div:not(.anime-loader > div:nth-child(2)):before {
   content: "";
   position: absolute;
   left: -1em;
@@ -67,5 +67,58 @@
 @keyframes move {
   0% {
     left: 95%;
+  }
+}
+
+/* Responsiveness for loaders */
+/* Responsiveness for ipad */
+@media only screen and (max-width: 76em) {
+  .anime-loader {
+    width: 100%;
+  }
+  .anime-intro-loader {
+    display: grid;
+    place-content: space-around;
+    place-items: center;
+    row-gap: 4em;
+  }
+  .anime-intro-loader > section:first-child {
+    grid-column: 1/3;
+  }
+  .anime-intro-loader > section {
+    width: 20em;
+  }
+  .anime-intro-loader > section div:first-child {
+    height: 25em;
+  }
+  .anime-intro-loader > section div:last-child {
+    position: absolute;
+    left: 25%;
+    width: 10em;
+    height: 3.8em;
+  }
+}
+
+@media only screen and (max-width: 730px) {
+  .anime-loader > div:first-child {
+    width: 23em;
+    height: 9em;
+  }
+  .anime-intro-loader {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 7em;
+  }
+}
+@media only screen and (max-width: 440px) {
+  .anime-loader {
+    row-gap: 3em;
+  }
+  .anime-intro-loader > section {
+    width: 100%;
+  }
+  .anime-loader > div:first-child {
+    width: 100%;
+    height: 3em;
   }
 }
