@@ -7,6 +7,8 @@ const URL = `https://gateway.marvel.com/v1/public//series?ts=${ts}&apikey=${publ
 const animeContainer = document.querySelector(".anime-content>section");
 const comicContent = document.querySelector(".comic-content");
 const HEAD = document.head;
+const animeLoader = document.querySelector(".anime-loader");
+let h1 = document.querySelector(".hidden");
 
 // Declaring empty variable to be used later
 let html = "";
@@ -19,6 +21,7 @@ const headContent = () => {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="index.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="loader.css" />
   `;
 };
 
@@ -31,8 +34,6 @@ const hamburger = () => {
     nav.classList == "show"
       ? (e.target.classList = "bi-x-circle")
       : (e.target.classList = "bi-list-nested");
-
-    // nav.classList.contains("show")?nav.classList.add("new-nav"):nav.classList.add("")
   });
 };
 const loopAnime = (parentComponent, src, heading, id, classes) => {
@@ -49,6 +50,7 @@ const loopAnime = (parentComponent, src, heading, id, classes) => {
         </section>
         `;
   parentComponent.innerHTML = html;
+  h1.classList.remove("hidden");
 };
 
 // fetching data for top five comics
@@ -57,6 +59,8 @@ const topAnime = async () => {
   const response = await data.json();
   const outcomes = response.data.results;
   const slicedOutcomes = outcomes.slice(1, 6);
+
+  animeLoader.remove();
 
   const classes = {
     parent: "anime-intro",

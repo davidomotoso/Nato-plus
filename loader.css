@@ -1,0 +1,71 @@
+/*  This CSS file is for the loader styles  */
+
+.hidden {
+  display: none;
+}
+.anime-loader {
+  width: 75em;
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+  row-gap: 2em;
+  --bgc-default: #817d7d;
+}
+.anime-intro-loader {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.anime-intro-loader > section {
+  width: 13.5em;
+}
+.anime-loader > div:first-child {
+  width: 35em;
+  height: 4em;
+  border-radius: 1em;
+  background-color: var(--bgc-default);
+}
+.anime-intro-loader > section section div:first-child {
+  height: 17.5em;
+  width: 100%;
+  background-color: var(--bgc-default);
+  border-radius: 1em;
+  box-shadow: 2px 3px 4px #000000;
+}
+
+.anime-intro-loader > section section div:nth-child(2) {
+  width: 100%;
+  height: 2.5em;
+  background-color: var(--bgc-default);
+  border-radius: 1em;
+  margin: 1em 0;
+}
+.anime-intro-loader > section section div:last-child {
+  background-color: var(--bgc-default);
+  width: 9.5em;
+  height: 3.6em;
+  border-radius: 0 0.7em 0 0.7em;
+}
+.anime-loader div:not(.anime-loader div:nth-child(2)) {
+  transition: 100ms;
+  overflow: hidden;
+  position: relative;
+}
+.anime-loader div:not(.anime-loader div:nth-child(2)):before {
+  content: "";
+  position: absolute;
+  left: -1em;
+  top: 0;
+  background-color: #fff;
+  height: 100%;
+  width: 0.5em;
+  filter: blur(10px);
+  transform: skewX(10deg);
+  animation: move 4s linear infinite;
+}
+@keyframes move {
+  0% {
+    left: 95%;
+  }
+}
