@@ -50,7 +50,6 @@ const loopAnime = (parentComponent, src, heading, id, classes) => {
         </section>
         `;
   parentComponent.innerHTML = html;
-  h1.classList.remove("hidden");
 };
 
 // fetching data for top five comics
@@ -60,6 +59,7 @@ const topAnime = async () => {
   const outcomes = response.data.results;
   const slicedOutcomes = outcomes.slice(1, 6);
 
+  h1.classList.remove("hidden");
   animeLoader.remove();
 
   const classes = {

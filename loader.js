@@ -7,12 +7,10 @@ function dummyAnimeElements() {
   let elements = "";
   for (let i = 5; i > 0; i--) {
     elements += `
-    <section>
         <section>
           <div></div>
           <div></div>
           <div></div>
-        </section>
         </section>
     `;
   }
