@@ -8,7 +8,9 @@ const animeContainer = document.querySelector(".anime-content>section");
 const comicContent = document.querySelector(".comic-content");
 const HEAD = document.head;
 const animeLoader = document.querySelector(".anime-loader");
-let h1 = document.querySelector(".hidden");
+const animeImageLoader = document.querySelector(".anime-intro-loader");
+let hiddenH1 = document.querySelector(".hidden");
+const comicLoader = document.querySelector(".comic-loader");
 
 // Declaring empty variable to be used later
 let html = "";
@@ -24,6 +26,21 @@ const headContent = () => {
     <link rel="stylesheet" href="loader.css" />
   `;
 };
+
+// making dummy DOM element for loader
+function dummyDomElements() {
+  let elements = "";
+  for (let i = 5; i > 0; i--) {
+    elements += `
+        <section>
+          <div></div>
+          <div></div>
+          <div></div>
+        </section>
+    `;
+  }
+  animeImageLoader.innerHTML += elements;
+}
 
 // hamburger function
 const hamburger = () => {
@@ -59,7 +76,8 @@ const topAnime = async () => {
   const outcomes = response.data.results;
   const slicedOutcomes = outcomes.slice(1, 6);
 
-  h1.classList.remove("hidden");
+  // remove a class and loader from DOM
+  hiddenH1.classList.remove("hidden");
   animeLoader.remove();
 
   const classes = {
@@ -96,6 +114,9 @@ const allComic = async () => {
   const response = await data.json();
   const outcomes = response.data.results;
 
+  // remove loader from DOM
+  comicLoader.remove();
+
   const classes = {
     parent: "comic-intro",
     figure: "comic-image",
@@ -108,7 +129,9 @@ const allComic = async () => {
 };
 
 // Calling out general functions here
+
 headContent();
 hamburger();
 topAnime();
 allComic();
+dummyDomElements();

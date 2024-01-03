@@ -3,6 +3,12 @@
 .hidden {
   display: none;
 }
+.loader_hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* Loader style for Intro page */
 .anime-loader {
   width: 75em;
   margin: 0 auto;
@@ -67,6 +73,36 @@
 @keyframes move {
   0% {
     left: 95%;
+  }
+}
+
+/* Style for Comic loader */
+.comic-loader {
+  background-color: #1f1f1f;
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  position: fixed;
+  width: 100%;
+}
+.comic-loader div {
+  width: 5em;
+  aspect-ratio: 1/1;
+  border-width: 7px;
+  border-style: solid;
+  border-top-color: #09d8d8;
+  border-left-color: #808080;
+  border-bottom-color: #808080;
+  border-right-color: #808080;
+  border-radius: 50%;
+  animation: rotate 1s ease-in-out infinite;
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 
