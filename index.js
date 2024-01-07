@@ -1,7 +1,8 @@
 const ts = 1701689634218;
 const publicKey = "02e1f0a2d49b93ccbd50739d6b726c5c";
 const hash = "e0d6a8e188272e010b434feb7a1444cb";
-const URL = `https://gateway.marvel.com/v1/public//series?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+const URL = `https://gateway.marvel.com/v1/public/series?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+// let storyUrl = `https://gateway.marvel.com/v1/public/stories/54073?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
 
 // getting DOM element
 const animeContainer = document.querySelector(".anime-content>section");
@@ -21,7 +22,6 @@ const headContent = () => {
   HEAD.innerHTML += `
   <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="index.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="loader.css" />
   `;
@@ -73,6 +73,7 @@ const loopAnime = (parentComponent, src, heading, id, classes) => {
 const topAnime = async () => {
   const data = await fetch(URL);
   const response = await data.json();
+  console.log(response);
   const outcomes = response.data.results;
   const slicedOutcomes = outcomes.slice(1, 6);
 
@@ -128,6 +129,15 @@ const allComic = async () => {
   });
 };
 
+// function test() {
+//   fetch(storyUrl)
+//     .then((res) => {
+//       return res;
+//     })
+//     .then((data) => console.log(data))
+//     .catch((reject) => log(reject));
+// }
+
 // Calling out general functions here
 
 headContent();
@@ -135,3 +145,5 @@ hamburger();
 topAnime();
 allComic();
 dummyDomElements();
+
+// test();
