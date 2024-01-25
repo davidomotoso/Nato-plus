@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: #fff;
+  color: #ffffff;
   text-decoration: none;
 }
 body {
@@ -40,6 +40,15 @@ header ul li > a:hover {
 .bi-x-circle {
   display: none;
   cursor: pointer;
+}
+.err-img {
+  height: 100vh;
+  padding: 0;
+  background-image: url(./assets/404-error.jpg);
+  background-size: cover;
+  background-position: 5% 34%;
+  background-repeat: no-repeat;
+  padding: 50vh 0;
 }
 /* Intro page styling */
 .bg-container {
@@ -104,6 +113,8 @@ header ul li > a:hover {
   font-size: 1.05em;
   margin: 1em 0;
   height: 2.5em;
+  /* color: #1f1f1f; */
+  /* font-weight: 600; */
 }
 .anime-intro button {
   font-size: 1.3em;
@@ -203,6 +214,9 @@ header ul li > a:hover {
   header ul {
     display: none;
   }
+  .err-img {
+    background-position: 30% 0%;
+  }
   .bi-list-nested,
   .bi-x-circle {
     display: block;
@@ -248,10 +262,14 @@ header ul li > a:hover {
     margin-top: 3em;
   }
 }
-@media only screen and (max-width: 440px) {
+@media only screen and (max-width: 450px) {
   /* General styling */
   .home {
     padding: 0 1em;
+  }
+  .err-img {
+    height: 80vh;
+    background-position: 42% 0%;
   }
   header {
     padding: 0.6em 0 2em;

@@ -71,26 +71,31 @@ const loopAnime = (parentComponent, src, heading, id, classes) => {
 
 // fetching data for top five comics
 const topAnime = async () => {
-  const data = await fetch(URL);
-  const response = await data.json();
-  console.log(response);
-  const outcomes = response.data.results;
-  const slicedOutcomes = outcomes.slice(1, 6);
+  try {
+    const data = await fetch(URL);
+    const response = await data.json();
+    const outcomes = response.data.results;
+    const slicedOutcomes = outcomes.slice(1, 6);
 
-  // remove a class and loader from DOM
-  hiddenH1.classList.remove("hidden");
-  animeLoader.remove();
+    // remove a class and loader from DOM
+    animeLoader.remove();
+    hiddenH1.classList.remove("hidden");
 
-  const classes = {
-    parent: "anime-intro",
-    figure: "action-figure",
-    header: "comic-desc",
-  };
+    const classes = {
+      parent: "anime-intro",
+      figure: "action-figure",
+      header: "comic-desc",
+    };
 
-  slicedOutcomes.forEach((outcome) => {
-    const { title, thumbnail, id } = outcome;
-    loopAnime(animeContainer, thumbnail, title, id, classes);
-  });
+    slicedOutcomes.forEach((outcome) => {
+      const { title, thumbnail, id } = outcome;
+      loopAnime(animeContainer, thumbnail, title, id, classes);
+    });
+  } catch {
+    let anime = document.querySelector(".anime-content");
+    animeLoader.remove();
+    anime.classList.add("err-img");
+  }
 };
 
 const loopComic = (parentComponent, src, heading, id, classes) => {
@@ -111,22 +116,35 @@ const loopComic = (parentComponent, src, heading, id, classes) => {
 
 // fetching data for 20 comics
 const allComic = async () => {
-  const data = await fetch(URL);
-  const response = await data.json();
-  const outcomes = response.data.results;
+  try {
+    const data = await fetch(URL);
+    const response = await data.json();
+    const outcomes = response.data.results;
 
-  // remove loader from DOM
-  comicLoader.remove();
+    // remove loader from DOM
+    comicLoader.remove();
 
-  const classes = {
-    parent: "comic-intro",
-    figure: "comic-image",
-    header: "comic-desc",
-  };
-  outcomes.forEach((outcome) => {
-    const { title, thumbnail, id } = outcome;
-    loopComic(comicContent, thumbnail, title, id, classes);
-  });
+    const classes = {
+      parent: "comic-intro",
+      figure: "comic-image",
+      header: "comic-desc",
+    };
+    outcomes.forEach((outcome) => {
+      const { title, thumbnail, id } = outcome;
+      loopComic(comicContent, thumbnail, title, id, classes);
+    });
+  } catch {
+    let body = document.body;
+    let header = document.querySelector(".header");
+    header.remove();
+    comicLoader.remove();
+    body.classList.add("err-img");
+    body.innerHTML = `
+      <h1 style="color:red;text-align:center;font-size:3em">
+        Check internet connection.<p style="color:#1f1f1f">Reload</p>
+      </h1>
+    `;
+  }
 };
 
 // function test() {
