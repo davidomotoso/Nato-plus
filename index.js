@@ -1,8 +1,9 @@
 const ts = 1701689634218;
 const publicKey = "02e1f0a2d49b93ccbd50739d6b726c5c";
 const hash = "e0d6a8e188272e010b434feb7a1444cb";
-const URL = `https://gateway.marvel.com/v1/public/series?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
-// let storyUrl = `https://gateway.marvel.com/v1/public/stories/54073?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+const URL = `https://gateway.marvel.com/v1/public/comics?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+// let storyUrl = `https://gateway.marvel.com/v1/public/comics
+// ?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
 
 // getting DOM element
 const animeContainer = document.querySelector(".anime-content>section");
@@ -42,6 +43,11 @@ function dummyDomElements() {
   animeImageLoader.innerHTML += elements;
 }
 
+// Reload browser
+const reload = () => {
+  location.reload();
+};
+
 // hamburger function
 const hamburger = () => {
   let menu = document.querySelector(".bi-list-nested");
@@ -71,26 +77,35 @@ const loopAnime = (parentComponent, src, heading, id, classes) => {
 
 // fetching data for top five comics
 const topAnime = async () => {
-  const data = await fetch(URL);
-  const response = await data.json();
-  console.log(response);
-  const outcomes = response.data.results;
-  const slicedOutcomes = outcomes.slice(1, 6);
+  try {
+    const data = await fetch(URL);
+    const response = await data.json();
+    const outcomes = response.data.results;
+    const slicedOutcomes = outcomes.slice(1, 6);
 
-  // remove a class and loader from DOM
-  hiddenH1.classList.remove("hidden");
-  animeLoader.remove();
+    // remove a class and loader from DOM
+    animeLoader.remove();
+    hiddenH1.classList.remove("hidden");
 
-  const classes = {
-    parent: "anime-intro",
-    figure: "action-figure",
-    header: "comic-desc",
-  };
+    const classes = {
+      parent: "anime-intro",
+      figure: "action-figure",
+      header: "comic-desc",
+    };
 
-  slicedOutcomes.forEach((outcome) => {
-    const { title, thumbnail, id } = outcome;
-    loopAnime(animeContainer, thumbnail, title, id, classes);
-  });
+    slicedOutcomes.forEach((outcome) => {
+      const { title, thumbnail, id } = outcome;
+      loopAnime(animeContainer, thumbnail, title, id, classes);
+    });
+  } catch {
+    let anime = document.querySelector(".anime-content");
+    animeLoader.remove();
+    anime.className = "err-img";
+    anime.innerHTML = `
+    <h1 style="color:red;text-align:center;font-size:3em">
+      Check internet connection.<p onClick=reload()>Reload</p>
+    </h1>`;
+  }
 };
 
 const loopComic = (parentComponent, src, heading, id, classes) => {
@@ -111,39 +126,48 @@ const loopComic = (parentComponent, src, heading, id, classes) => {
 
 // fetching data for 20 comics
 const allComic = async () => {
-  const data = await fetch(URL);
-  const response = await data.json();
-  const outcomes = response.data.results;
+  try {
+    const data = await fetch(URL);
+    const response = await data.json();
+    const outcomes = response.data.results;
 
-  // remove loader from DOM
-  comicLoader.remove();
+    // remove loader from DOM
+    comicLoader.remove();
 
-  const classes = {
-    parent: "comic-intro",
-    figure: "comic-image",
-    header: "comic-desc",
-  };
-  outcomes.forEach((outcome) => {
-    const { title, thumbnail, id } = outcome;
-    loopComic(comicContent, thumbnail, title, id, classes);
-  });
+    const classes = {
+      parent: "comic-intro",
+      figure: "comic-image",
+      header: "comic-desc",
+    };
+    outcomes.forEach((outcome) => {
+      const { title, thumbnail, id } = outcome;
+      loopComic(comicContent, thumbnail, title, id, classes);
+    });
+  } catch {
+    let body = document.body;
+    let header = document.querySelector(".header");
+    header.remove();
+    comicLoader.remove();
+    body.classList.add("err-img");
+    body.innerHTML = `
+      <h1 style="color:red;text-align:center;font-size:3em">
+        Check internet connection.<p onclick=reload()>Reload</p>
+      </h1>
+    `;
+  }
 };
 
-// function test() {
-//   fetch(storyUrl)
-//     .then((res) => {
-//       return res;
-//     })
-//     .then((data) => console.log(data))
-//     .catch((reject) => log(reject));
+// async function test() {
+//   const test = await fetch(storyUrl);
+//   const data = await test.json();
+//   console.log(data);
 // }
 
 // Calling out general functions here
 
+// test();
 headContent();
 hamburger();
 topAnime();
 allComic();
 dummyDomElements();
-
-// test();

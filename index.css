@@ -3,10 +3,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: #fff;
+  color: #ffffff;
   text-decoration: none;
 }
 body {
+  font-family: cursive;
   background-color: #1f1f1f;
 }
 .home,
@@ -41,6 +42,22 @@ header ul li > a:hover {
   display: none;
   cursor: pointer;
 }
+.err-img {
+  height: 100vh;
+  padding: 0;
+  background-image: url(./assets/404-error.jpg);
+  background-size: cover;
+  background-position: 5% 34%;
+  background-repeat: no-repeat;
+  padding: 45vh 0;
+}
+.err-img p {
+  color: #1f1f1f;
+  cursor: pointer;
+}
+.err-img p:hover {
+  color: #ff7b00;
+}
 /* Intro page styling */
 .bg-container {
   background-image: url("./assets/home-bg.gif");
@@ -56,6 +73,7 @@ header ul li > a:hover {
   opacity: 1;
 }
 .home-content div h1 {
+  font-family: "Courier New", Courier, monospace;
   font-size: 6em;
   transition: 200ms;
   animation: fade 3.5s linear infinite;
@@ -85,7 +103,12 @@ header ul li > a:hover {
   justify-content: space-between;
 }
 .anime-intro {
-  width: 13.5em;
+  width: 13.9em;
+}
+.anime-intro .comic-desc {
+  text-align: left;
+  height: 2em;
+  margin: 2em 0;
 }
 .action-figure {
   height: 17.5em;
@@ -97,12 +120,11 @@ header ul li > a:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 10% top;
+  object-position: 8% top;
   box-shadow: 2px 3px 4px #000000;
 }
 .comic-desc {
   font-size: 1.05em;
-  margin: 1em 0;
   height: 2.5em;
 }
 .anime-intro button {
@@ -125,14 +147,16 @@ header ul li > a:hover {
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 3em;
+  gap: 5em 3em;
   padding-bottom: 4em;
 }
 .comic-intro {
-  width: 16em;
+  display: grid;
+  row-gap: 3em;
+  width: 16.5em;
 }
 .comic-image {
-  height: 20em;
+  height: 23em;
 }
 .comic-intro button {
   font-size: 1.3em;
@@ -176,6 +200,7 @@ header ul li > a:hover {
   }
   .comic-desc {
     text-align: center;
+    height: 100%;
   }
   .anime-intro button {
     padding: 0.8em 1.2em;
@@ -194,6 +219,7 @@ header ul li > a:hover {
   }
   .comic-intro {
     width: 25em;
+    row-gap: 1em;
   }
 }
 
@@ -202,6 +228,9 @@ header ul li > a:hover {
   /* General styling  */
   header ul {
     display: none;
+  }
+  .err-img {
+    background-position: 30% 0%;
   }
   .bi-list-nested,
   .bi-x-circle {
@@ -248,10 +277,14 @@ header ul li > a:hover {
     margin-top: 3em;
   }
 }
-@media only screen and (max-width: 440px) {
+@media only screen and (max-width: 450px) {
   /* General styling */
   .home {
     padding: 0 1em;
+  }
+  .err-img {
+    height: 80vh;
+    background-position: 42% 0%;
   }
   header {
     padding: 0.6em 0 2em;
@@ -262,6 +295,11 @@ header ul li > a:hover {
   }
   .anime-intro {
     width: 100%;
+  }
+  .anime-intro .comic-desc {
+    text-align: center;
+    height: 100%;
+    margin: 1.2em 0;
   }
 
   /* Comic styling */
