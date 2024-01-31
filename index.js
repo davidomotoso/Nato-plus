@@ -1,8 +1,9 @@
 const ts = 1701689634218;
 const publicKey = "02e1f0a2d49b93ccbd50739d6b726c5c";
 const hash = "e0d6a8e188272e010b434feb7a1444cb";
-const URL = `https://gateway.marvel.com/v1/public/series?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
-// let storyUrl = `https://gateway.marvel.com/v1/public/stories/54073?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+const URL = `https://gateway.marvel.com/v1/public/comics?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+// let storyUrl = `https://gateway.marvel.com/v1/public/comics
+// ?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
 
 // getting DOM element
 const animeContainer = document.querySelector(".anime-content>section");
@@ -41,6 +42,11 @@ function dummyDomElements() {
   }
   animeImageLoader.innerHTML += elements;
 }
+
+// Reload browser
+const reload = () => {
+  location.reload();
+};
 
 // hamburger function
 const hamburger = () => {
@@ -94,7 +100,11 @@ const topAnime = async () => {
   } catch {
     let anime = document.querySelector(".anime-content");
     animeLoader.remove();
-    anime.classList.add("err-img");
+    anime.className = "err-img";
+    anime.innerHTML = `
+    <h1 style="color:red;text-align:center;font-size:3em">
+      Check internet connection.<p onClick=reload()>Reload</p>
+    </h1>`;
   }
 };
 
@@ -141,27 +151,23 @@ const allComic = async () => {
     body.classList.add("err-img");
     body.innerHTML = `
       <h1 style="color:red;text-align:center;font-size:3em">
-        Check internet connection.<p style="color:#1f1f1f">Reload</p>
+        Check internet connection.<p onclick=reload()>Reload</p>
       </h1>
     `;
   }
 };
 
-// function test() {
-//   fetch(storyUrl)
-//     .then((res) => {
-//       return res;
-//     })
-//     .then((data) => console.log(data))
-//     .catch((reject) => log(reject));
+// async function test() {
+//   const test = await fetch(storyUrl);
+//   const data = await test.json();
+//   console.log(data);
 // }
 
 // Calling out general functions here
 
+// test();
 headContent();
 hamburger();
 topAnime();
 allComic();
 dummyDomElements();
-
-// test();
