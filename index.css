@@ -142,7 +142,8 @@ header ul li > a:hover {
 }
 
 /* Comic content style */
-.comic-content {
+.comic-content,
+.series {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -213,7 +214,8 @@ header ul li > a:hover {
   }
 
   /*Comic style*/
-  .comic-content {
+  .comic-content,
+  .series {
     justify-content: space-around;
     gap: 5em 0;
   }
@@ -273,7 +275,8 @@ header ul li > a:hover {
     font-size: 4em;
   }
   /* comic styling */
-  .comic-content {
+  .comic-content,
+  .series {
     margin-top: 3em;
   }
 }
@@ -303,7 +306,8 @@ header ul li > a:hover {
   }
 
   /* Comic styling */
-  .comic-content {
+  .comic-content,
+  .series {
     gap: 7em 0;
   }
   .comic-intro {

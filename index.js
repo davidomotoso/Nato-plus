@@ -1,7 +1,8 @@
 const ts = 1701689634218;
 const publicKey = "02e1f0a2d49b93ccbd50739d6b726c5c";
 const hash = "e0d6a8e188272e010b434feb7a1444cb";
-const URL = `https://gateway.marvel.com/v1/public/comics?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+const COMICURL = `https://gateway.marvel.com/v1/public/comics?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+const SERIESURL = `https://gateway.marvel.com/v1/public/series?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
 // let storyUrl = `https://gateway.marvel.com/v1/public/comics
 // ?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
 
@@ -13,6 +14,7 @@ const animeLoader = document.querySelector(".anime-loader");
 const animeImageLoader = document.querySelector(".anime-intro-loader");
 let hiddenH1 = document.querySelector(".hidden");
 const comicLoader = document.querySelector(".comic-loader");
+const series = document.querySelector(".series");
 
 // Declaring empty variable to be used later
 let html = "";
@@ -78,7 +80,7 @@ const loopAnime = (parentComponent, src, heading, id, classes) => {
 // fetching data for top five comics
 const topAnime = async () => {
   try {
-    const data = await fetch(URL);
+    const data = await fetch(COMICURL);
     const response = await data.json();
     const outcomes = response.data.results;
     const slicedOutcomes = outcomes.slice(1, 6);
@@ -125,9 +127,9 @@ const loopComic = (parentComponent, src, heading, id, classes) => {
 };
 
 // fetching data for 20 comics
-const allComic = async () => {
+const allComic = async (url) => {
   try {
-    const data = await fetch(URL);
+    const data = await fetch(url);
     const response = await data.json();
     const outcomes = response.data.results;
 
@@ -141,7 +143,11 @@ const allComic = async () => {
     };
     outcomes.forEach((outcome) => {
       const { title, thumbnail, id } = outcome;
-      loopComic(comicContent, thumbnail, title, id, classes);
+      if (comicContent !== null) {
+        loopComic(comicContent, thumbnail, title, id, classes);
+      } else {
+        loopComic(series, thumbnail, title, id, classes);
+      }
     });
   } catch {
     let body = document.body;
@@ -157,6 +163,15 @@ const allComic = async () => {
   }
 };
 
+// Fetching different data for different page
+function diffData() {
+  if (comicContent !== null) {
+    allComic(COMICURL);
+  } else {
+    allComic(SERIESURL);
+  }
+}
+
 // async function test() {
 //   const test = await fetch(storyUrl);
 //   const data = await test.json();
@@ -168,6 +183,6 @@ const allComic = async () => {
 // test();
 headContent();
 hamburger();
+diffData();
 topAnime();
-allComic();
 dummyDomElements();
