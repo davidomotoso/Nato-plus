@@ -121,7 +121,7 @@ header ul li > a:hover {
   height: 100%;
   object-fit: cover;
   object-position: 8% top;
-  box-shadow: 2px 3px 4px #000000;
+  box-shadow: 1px 1px 13px #5a554b;
 }
 .comic-desc {
   font-size: 1.05em;
