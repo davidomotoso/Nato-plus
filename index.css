@@ -104,15 +104,18 @@ header ul li > a:hover {
 }
 .anime-intro {
   width: 13.9em;
+  display: grid;
+  row-gap: 0.7em;
+  cursor: pointer;
 }
-.anime-intro .comic-desc {
-  text-align: left;
-  height: 2em;
-  margin: 2em 0;
+.anime-intro:hover .comic-desc,
+.comic-intro:hover .comic-desc {
+  color: #ff7300;
 }
 .action-figure {
   height: 17.5em;
   width: 100%;
+  transition: 200ms;
 }
 .action-figure img,
 .comic-image img {
@@ -126,19 +129,11 @@ header ul li > a:hover {
 .comic-desc {
   font-size: 1.05em;
   height: 2.5em;
+  transition: 200ms;
 }
-.anime-intro button {
-  font-size: 1.3em;
-  background-color: #ff7300;
-  border: 0;
-  padding: 0.7em;
-  border-radius: 0 0.7em 0 0.7em;
-  box-shadow: 12px 14px 2px #000000;
-  transition: translate 200ms;
-  cursor: pointer;
-}
-.anime-intro button:hover {
-  translate: 2px 5px;
+.anime-intro:hover .action-figure,
+.comic-intro:hover .comic-image {
+  translate: 0 -10px;
 }
 
 /* Comic content style */
@@ -153,19 +148,13 @@ header ul li > a:hover {
 }
 .comic-intro {
   display: grid;
-  row-gap: 3em;
+  row-gap: 1em;
   width: 16.5em;
+  cursor: pointer;
 }
 .comic-image {
   height: 23em;
-}
-.comic-intro button {
-  font-size: 1.3em;
-  background-color: green;
-  border: 0;
-  padding: 0.7em 0.5em;
-  border-radius: 0 0.7em 0 0.7em;
-  box-shadow: 9px 10px 0 burlywood;
+  transition: 200ms;
 }
 
 /* Responsiveness */
@@ -203,9 +192,6 @@ header ul li > a:hover {
     text-align: center;
     height: 100%;
   }
-  .anime-intro button {
-    padding: 0.8em 1.2em;
-  }
 
   /* combined style */
   .action-figure,
@@ -221,7 +207,6 @@ header ul li > a:hover {
   }
   .comic-intro {
     width: 25em;
-    row-gap: 1em;
   }
 }
 
@@ -290,7 +275,7 @@ header ul li > a:hover {
     background-position: 42% 0%;
   }
   header {
-    padding: 0.6em 0 2em;
+    /* padding: 0.6em 0 2em; */
   }
   /* Intro page syling */
   .anime-content h1 {

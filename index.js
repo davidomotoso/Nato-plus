@@ -3,8 +3,8 @@ const publicKey = "02e1f0a2d49b93ccbd50739d6b726c5c";
 const hash = "e0d6a8e188272e010b434feb7a1444cb";
 const COMICURL = `https://gateway.marvel.com/v1/public/comics?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
 const SERIESURL = `https://gateway.marvel.com/v1/public/series?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
-// let storyUrl = `https://gateway.marvel.com/v1/public/comics
-// ?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+
+// ! Take note of textobjects
 
 // getting DOM element
 const animeContainer = document.querySelector(".anime-content>section");
@@ -38,7 +38,6 @@ function dummyDomElements() {
         <section>
           <div></div>
           <div></div>
-          <div></div>
         </section>
     `;
   }
@@ -64,17 +63,20 @@ const hamburger = () => {
 const loopAnime = (parentComponent, src, heading, id, classes) => {
   const { parent, figure, header } = classes;
   html += `
-        <section class="${parent}" id=${id}>
+        <a href="./readComics.html" class="${parent}" id=${id} onclick="getIndividualData(e)">
           <figure class="${figure}">
-            <img src="${src.path}.${src.extension}" alt=""/>
+            <img src="${src.path}.${src.extension}" alt="" loading="lazy"/>
           </figure>
           <section class="${header}">
           ${heading}
           </section>
-          <section><button>Read more</button></section>
-        </section>
+        </a>
         `;
   parentComponent.innerHTML = html;
+};
+
+const getIndividualData = async (e) => {
+  console.log(e.target);
 };
 
 // fetching data for top five comics
@@ -83,6 +85,7 @@ const topAnime = async () => {
     const data = await fetch(COMICURL);
     const response = await data.json();
     const outcomes = response.data.results;
+    //? console.log(outcomes);
     const slicedOutcomes = outcomes.slice(1, 6);
 
     // remove a class and loader from DOM
@@ -115,12 +118,11 @@ const loopComic = (parentComponent, src, heading, id, classes) => {
   content += `
         <section class="${parent}" id=${id}>
           <figure class="${figure}">
-            <img src="${src.path}.${src.extension}" alt=""/>
+            <img src="${src.path}.${src.extension}" alt="" loading="lazy"/>
           </figure>
           <section class="${header}">
           ${heading}
           </section>
-          <section><button>Read more</button></section>
         </section>
         `;
   parentComponent.innerHTML = content;
