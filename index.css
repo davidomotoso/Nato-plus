@@ -157,6 +157,13 @@ header ul li > a:hover {
   transition: 200ms;
 }
 /* readComics style */
+.body {
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 10% 40%;
+}
 .readerContent {
   width: 37em;
   display: grid;
@@ -166,9 +173,9 @@ header ul li > a:hover {
 .creators {
   display: flex;
   align-items: center;
-  justify-content: stretch;
+  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 1.5em;
+  gap: 1.4em;
 }
 
 /* Responsiveness */
@@ -222,6 +229,10 @@ header ul li > a:hover {
   .comic-intro {
     width: 25em;
   }
+  /* readContent style */
+  .readerContent {
+    padding: 0 1em;
+  }
 }
 
 /* Responsiveness for mobile */
@@ -247,8 +258,8 @@ header ul li > a:hover {
     top: 2.2em;
     left: 0;
     width: 100%;
+    background-color: #008080;
   }
-
   header ul li {
     padding: 0.3em 0 0.4em 1em;
     border-bottom: 2px solid #ffffff;
@@ -277,6 +288,10 @@ header ul li > a:hover {
   .comic-content,
   .series {
     margin-top: 3em;
+  }
+  /* readContent style */
+  .readerContent {
+    width: 100%;
   }
 }
 @media only screen and (max-width: 450px) {
@@ -313,5 +328,9 @@ header ul li > a:hover {
   }
   .comic-image {
     height: 100%;
+  }
+  /* readContent style */
+  .readerContent {
+    padding: 0;
   }
 }
