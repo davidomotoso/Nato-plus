@@ -4,8 +4,6 @@ const hash = "e0d6a8e188272e010b434feb7a1444cb";
 const COMICURL = `https://gateway.marvel.com/v1/public/comics?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
 const SERIESURL = `https://gateway.marvel.com/v1/public/series?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
 
-// ! Take note of textobjects
-
 // getting DOM element
 const animeContainer = document.querySelector(".anime-content>section");
 const comicContent = document.querySelector(".comic-content");
@@ -15,6 +13,7 @@ const animeImageLoader = document.querySelector(".anime-intro-loader");
 let hiddenH1 = document.querySelector(".hidden");
 const comicLoader = document.querySelector(".comic-loader");
 const series = document.querySelector(".series");
+const readerContent = document.querySelector(".readerContent");
 
 // Declaring empty variable to be used later
 let html = "";
@@ -60,24 +59,86 @@ const hamburger = () => {
       : (e.target.classList = "bi-list-nested");
   });
 };
+
+// looping through data.
 const loopAnime = (parentComponent, src, heading, id, classes) => {
   const { parent, figure, header } = classes;
   html += `
-        <a href="./readComics.html" class="${parent}" id=${id} onclick="getIndividualData(e)">
+        <section  class="${parent}" id=${id}  onclick="saveId(id)">
           <figure class="${figure}">
             <img src="${src.path}.${src.extension}" alt="" loading="lazy"/>
           </figure>
           <section class="${header}">
           ${heading}
           </section>
-        </a>
+        </section>
         `;
   parentComponent.innerHTML = html;
 };
 
-const getIndividualData = async (e) => {
-  console.log(e.target);
+// Saving id in session storage
+const saveId = (id) => {
+  sessionStorage.setItem("animeId", id);
+  window.location.href = `./readComics.html`;
 };
+
+// fetching individual comics
+const getIndividualData = async () => {
+  // let creatorClass= document.querySelectorqueryselector('.creators')
+  let participant = "";
+  let story = "";
+  // getting id from session storage
+  let retrivedId = sessionStorage.getItem("animeId");
+  // fetching api via id
+  let INDIVIDUALURL = `https://gateway.marvel.com/v1/public/comics/${retrivedId}?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+  const url = await fetch(INDIVIDUALURL);
+  const output = await url.json();
+  const result = output.data.results[0];
+
+  // getting image
+  let bg = document.querySelector(".readbg");
+  let imgSrc = `${result.thumbnail.path}.${result.thumbnail.extension}`;
+  bg.style.backgroundImage = `url(${imgSrc})`;
+
+  // getting  title
+  let title = result.title;
+
+  // getting story
+  result.textObjects[0] === undefined
+    ? (story = "No description displayed")
+    : (story = result.textObjects[0].text);
+
+  // getting creators
+  let creators = result.creators.items;
+  creators[0] == undefined
+    ? (participant += `<section>No creator displayed</section>`)
+    : getCreators();
+  function getCreators() {
+    creators.forEach((creator) => {
+      participant += `<section>
+      <h3>${creator.role}</h3>
+      <p>${creator.name}</p>
+      </section>`;
+    });
+  }
+  readComicContent(readerContent, title, participant, story);
+};
+
+// making a function for readComic content
+function readComicContent(content, title, participant, story) {
+  content.innerHTML = `
+    <section>
+      <h2>${title}</h2>
+      </section>
+      <section class="creators">
+      ${participant}
+      </section>
+      <section class="story">
+        ${story}
+      </section>
+    </section>
+  `;
+}
 
 // fetching data for top five comics
 const topAnime = async () => {
@@ -85,7 +146,6 @@ const topAnime = async () => {
     const data = await fetch(COMICURL);
     const response = await data.json();
     const outcomes = response.data.results;
-    //? console.log(outcomes);
     const slicedOutcomes = outcomes.slice(1, 6);
 
     // remove a class and loader from DOM
@@ -174,17 +234,9 @@ function diffData() {
   }
 }
 
-// async function test() {
-//   const test = await fetch(storyUrl);
-//   const data = await test.json();
-//   console.log(data);
-// }
-
-// Calling out general functions here
-
-// test();
 headContent();
 hamburger();
+getIndividualData();
 diffData();
 topAnime();
 dummyDomElements();

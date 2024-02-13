@@ -4,12 +4,42 @@
     <title>something</title>
     <meta name="description" content="Page for reading details of comic" />
     <link rel="stylesheet" href="index.css" />
+    <style>
+      .home {
+        padding: 0 2em;
+      }
+      @media only screen and (max-width: 76em) {
+        .home {
+          padding: 0 1em;
+        }
+      }
+    </style>
   </head>
   <body>
-    <section class="home">
-      <header class="header">
+    <div
+      class="readbg"
+      style="
+        height: 100vh;
+        z-index: -1;
+        position: relative;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 10% 40%;
+        filter: blur(5px);
+      "
+    ></div>
+    <section
+      class="home"
+      style="
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+      "
+    >
+      <header>
         <section class="title">
-          <!-- space for logo image -->
           <p>Nato-plus</p>
         </section>
         <nav>
@@ -21,6 +51,7 @@
           </ul>
         </nav>
       </header>
+      <section class="readerContent"></section>
     </section>
     <script src="index.js"></script>
   </body>

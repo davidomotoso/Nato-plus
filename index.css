@@ -156,6 +156,20 @@ header ul li > a:hover {
   height: 23em;
   transition: 200ms;
 }
+/* readComics style */
+.readerContent {
+  width: 37em;
+  display: grid;
+  row-gap: 2.5em;
+  font-size: 1.1em;
+}
+.creators {
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
+  flex-wrap: wrap;
+  gap: 1.5em;
+}
 
 /* Responsiveness */
 /* Responsiveness for ipad */
@@ -275,7 +289,7 @@ header ul li > a:hover {
     background-position: 42% 0%;
   }
   header {
-    /* padding: 0.6em 0 2em; */
+    padding: 0.6em 0 2em;
   }
   /* Intro page syling */
   .anime-content h1 {
@@ -287,7 +301,6 @@ header ul li > a:hover {
   .anime-intro .comic-desc {
     text-align: center;
     height: 100%;
-    margin: 1.2em 0;
   }
 
   /* Comic styling */
