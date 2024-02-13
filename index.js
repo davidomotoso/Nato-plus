@@ -76,37 +76,53 @@ const loopAnime = (parentComponent, src, heading, id, classes) => {
   parentComponent.innerHTML = html;
 };
 
-// Saving id in session storage
+// Saving id & location in session storage
 const saveId = (id) => {
+  sessionStorage.setItem("location", window.location.href);
   sessionStorage.setItem("animeId", id);
   window.location.href = `./readComics.html`;
 };
 
+// function for different page readStory
+function diffStories(url, result) {
+  let story = "";
+  if (url.includes("comics")) {
+    result.textObjects[0] === undefined
+      ? (story = "No description displayed")
+      : (story = result.textObjects[0].text);
+  } else {
+    story = "No description displayed";
+  }
+  return story;
+}
+
 // fetching individual comics
 const getIndividualData = async () => {
-  // let creatorClass= document.querySelectorqueryselector('.creators')
+  // assigning variables to empty strings
   let participant = "";
-  let story = "";
-  // getting id from session storage
+  let INDIVIDUALURL = "";
+
+  // getting id & location from session storage
   let retrivedId = sessionStorage.getItem("animeId");
-  // fetching api via id
-  let INDIVIDUALURL = `https://gateway.marvel.com/v1/public/comics/${retrivedId}?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+  let prevLocation = sessionStorage.getItem("location");
+
+  // validating which page to fetch data for
+  prevLocation.includes("Comic") // fetching api via id
+    ? (INDIVIDUALURL = `https://gateway.marvel.com/v1/public/comics/${retrivedId}?ts=${ts}&apikey=${publicKey}&hash=${hash}`)
+    : (INDIVIDUALURL = `https://gateway.marvel.com/v1/public/series/${retrivedId}?ts=${ts}&apikey=${publicKey}&hash=${hash}`);
   const url = await fetch(INDIVIDUALURL);
   const output = await url.json();
   const result = output.data.results[0];
-
   // getting image
-  let bg = document.querySelector(".readbg");
+  let bg = document.querySelector(".body");
   let imgSrc = `${result.thumbnail.path}.${result.thumbnail.extension}`;
-  bg.style.backgroundImage = `url(${imgSrc})`;
+  bg.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.7),rgba(0,0,0,0.7)),url(${imgSrc})`;
 
   // getting  title
   let title = result.title;
 
   // getting story
-  result.textObjects[0] === undefined
-    ? (story = "No description displayed")
-    : (story = result.textObjects[0].text);
+  let story = diffStories(INDIVIDUALURL, result);
 
   // getting creators
   let creators = result.creators.items;
@@ -176,7 +192,7 @@ const topAnime = async () => {
 const loopComic = (parentComponent, src, heading, id, classes) => {
   const { parent, figure, header } = classes;
   content += `
-        <section class="${parent}" id=${id}>
+        <section class="${parent}" id="${id}" onclick="saveId(id)">
           <figure class="${figure}">
             <img src="${src.path}.${src.extension}" alt="" loading="lazy"/>
           </figure>
