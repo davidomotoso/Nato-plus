@@ -65,7 +65,7 @@ const loopAnime = (parentComponent, src, heading, id, classes) => {
   html += `
         <section  class="${parent}" id=${id}  onclick="saveId(id)">
           <figure class="${figure}">
-            <img src="${src.path}.${src.extension}" alt="" loading="lazy"/>
+            <img src="${src.path}.${src.extension}" alt="${heading}" loading="lazy"/>
           </figure>
           <section class="${header}">
           ${heading}
@@ -94,6 +94,30 @@ function diffStories(url, result) {
   }
   return story;
 }
+
+// getv variants from pages
+function getVariants(url, result) {
+  let variants = "";
+  if (url.includes("series")) {
+    result.stories.items === undefined
+      ? (variants = "No description displayed")
+      : (variants = result.stories.items.map((item) => item.resourceURI));
+  } else {
+    variants = result.variants;
+    variants == ""
+      ? (variants = "No variant available")
+      : (variants = result.variants.map((variant) => variant.resourceURI));
+  }
+  return variants;
+}
+
+// fetch variants
+const fetchVariants = async (rawUrl) => {
+  let url = `${rawUrl}?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+  const data = await fetch(url);
+  const response = await data.json();
+  console.log(response);
+};
 
 // making a function for readComic content
 function readComicContent(content, title, participant, story) {
@@ -149,7 +173,7 @@ const loopComic = (parentComponent, src, heading, id, classes) => {
   content += `
         <section class="${parent}" id="${id}" onclick="saveId(id)">
           <figure class="${figure}">
-            <img src="${src.path}.${src.extension}" alt="" loading="lazy"/>
+            <img src="${src.path}.${src.extension}" alt="${heading}" loading="lazy"/>
           </figure>
           <section class="${header}">
           ${heading}
@@ -202,54 +226,55 @@ const allComic = async (url) => {
 };
 // fetching individual comics
 const getIndividualData = async () => {
-  try {
-    // assigning variables to empty strings
-    let participant = "";
-    let INDIVIDUALURL = "";
+  // assigning variables to empty strings
+  let participant = "";
+  let INDIVIDUALURL = "";
 
-    // getting id & location from session storage
-    let retrivedId = sessionStorage.getItem("animeId");
-    let prevLocation = sessionStorage.getItem("location");
+  // getting id & location from session storage
+  let retrivedId = sessionStorage.getItem("animeId");
+  let prevLocation = sessionStorage.getItem("location");
 
-    // validating which page to fetch data for
-    prevLocation.includes("index") // fetching api via id
-      ? (INDIVIDUALURL = `https://gateway.marvel.com/v1/public/comics/${retrivedId}?ts=${ts}&apikey=${publicKey}&hash=${hash}`)
-      : prevLocation.includes("Comic")
-      ? (INDIVIDUALURL = `https://gateway.marvel.com/v1/public/comics/${retrivedId}?ts=${ts}&apikey=${publicKey}&hash=${hash}`)
-      : (INDIVIDUALURL = `https://gateway.marvel.com/v1/public/series/${retrivedId}?ts=${ts}&apikey=${publicKey}&hash=${hash}`);
-    const url = await fetch(INDIVIDUALURL);
-    const output = await url.json();
-    const result = output.data.results[0];
-    // remove loader
-    document.querySelector(".load").remove();
-    // getting image
-    let bg = document.querySelector(".body");
-    let imgSrc = `${result.thumbnail.path}.${result.thumbnail.extension}`;
-    bg.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.7),rgba(0,0,0,0.7)),url(${imgSrc})`;
+  // validating which page to fetch data for
+  prevLocation.includes("index") // fetching api via id
+    ? (INDIVIDUALURL = `https://gateway.marvel.com/v1/public/comics/${retrivedId}?ts=${ts}&apikey=${publicKey}&hash=${hash}`)
+    : prevLocation.includes("Comic")
+    ? (INDIVIDUALURL = `https://gateway.marvel.com/v1/public/comics/${retrivedId}?ts=${ts}&apikey=${publicKey}&hash=${hash}`)
+    : (INDIVIDUALURL = `https://gateway.marvel.com/v1/public/series/${retrivedId}?ts=${ts}&apikey=${publicKey}&hash=${hash}`);
+  const url = await fetch(INDIVIDUALURL);
+  const output = await url.json();
+  const result = output.data.results[0];
+  // remove loader
+  document.querySelector(".load").remove();
+  // getting image
+  let bg = document.querySelector(".body");
+  let imgSrc = `${result.thumbnail.path}.${result.thumbnail.extension}`;
+  bg.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.7),rgba(0,0,0,0.7)),url(${imgSrc})`;
 
-    // getting  title
-    let title = result.title;
+  let variants = getVariants(INDIVIDUALURL, result);
+  if (Array.isArray(variants)) {
+    variants.map((variant) => fetchVariants(variant));
+  }
 
-    // getting story
-    let story = diffStories(INDIVIDUALURL, result);
+  // getting  title
+  let title = result.title;
 
-    // getting creators
-    let creators = result.creators.items;
-    creators[0] == undefined
-      ? (participant += `<section>No creator displayed</section>`)
-      : getCreators();
-    function getCreators() {
-      creators.forEach((creator) => {
-        participant += `<section>
+  // getting story
+  let story = diffStories(INDIVIDUALURL, result);
+
+  // getting creators
+  let creators = result.creators.items;
+  creators[0] == undefined
+    ? (participant += `<section>No creator displayed</section>`)
+    : getCreators();
+  function getCreators() {
+    creators.forEach((creator) => {
+      participant += `<section>
       <h3>${creator.role}</h3>
       <p>${creator.name}</p>
       </section>`;
-      });
-    }
-    readComicContent(readerContent, title, participant, story);
-  } catch {
-    err();
+    });
   }
+  readComicContent(readerContent, title, participant, story);
 };
 
 // Fetching different data for different page
