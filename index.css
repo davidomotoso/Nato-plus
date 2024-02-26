@@ -109,7 +109,8 @@ header ul li > a:hover {
   cursor: pointer;
 }
 .anime-intro:hover .comic-desc,
-.comic-intro:hover .comic-desc {
+.comic-intro:hover .comic-desc,
+.variant:hover .variant-desc {
   color: #ff7300;
 }
 .action-figure {
@@ -132,7 +133,8 @@ header ul li > a:hover {
   transition: 200ms;
 }
 .anime-intro:hover .action-figure,
-.comic-intro:hover .comic-image {
+.comic-intro:hover .comic-image,
+.variant:hover .variant-image {
   translate: 0 -10px;
 }
 
@@ -177,6 +179,40 @@ header ul li > a:hover {
   flex-wrap: wrap;
   gap: 1.4em;
 }
+.variants-root {
+  background-color: #eeeeee;
+}
+.variants-container {
+  width: 75em;
+  margin: 0 auto;
+  padding: 6em 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 5em 2em;
+}
+.variant {
+  display: grid;
+  row-gap: 1em;
+  cursor: pointer;
+  place-content: center;
+  width: 23.5em;
+}
+.variant-image {
+  transition: 300ms;
+}
+.variant-image > img {
+  object-fit: cover;
+  height: 20em;
+  box-shadow: 0 0 10px 2px #1f1f1f;
+}
+.variant-desc {
+  height: 2.6em;
+  font-size: 1.3em;
+  color: #1f1f1f;
+  transition: 300ms;
+}
 
 /* Responsiveness */
 /* Responsiveness for ipad */
@@ -186,6 +222,7 @@ header ul li > a:hover {
     padding: 0.6em 1em 2em;
   }
   .home,
+  .variants-container,
   .anime-content > section {
     width: 100%;
   }
@@ -259,6 +296,7 @@ header ul li > a:hover {
     left: 0;
     width: 100%;
     background-color: #008080;
+    z-index: 3;
   }
   header ul li {
     padding: 0.3em 0 0.4em 1em;

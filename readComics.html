@@ -10,7 +10,12 @@
   <body class="body">
     <section
       class="home"
-      style="background-color: transparent; padding-bottom: 2em"
+      style="
+        background-color: transparent;
+        padding-bottom: 2em;
+        height: 100vh;
+        overflow-y: auto;
+      "
     >
       <header>
         <section class="title">
@@ -27,6 +32,9 @@
       </header>
       <div class="load">Loading<span>.</span><span>.</span><span>.</span></div>
       <section class="readerContent"></section>
+    </section>
+    <section class="variants-root">
+      <section class="variants-container"></section>
     </section>
     <script src="index.js"></script>
   </body>
