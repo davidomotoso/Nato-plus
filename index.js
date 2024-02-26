@@ -14,6 +14,7 @@ let hiddenH1 = document.querySelector(".hidden");
 const comicLoader = document.querySelector(".comic-loader");
 const series = document.querySelector(".series");
 const readerContent = document.querySelector(".readerContent");
+const variantsContainer = document.querySelector(".variants-container");
 
 // Declaring empty variable to be used later
 let html = "";
@@ -95,16 +96,16 @@ function diffStories(url, result) {
   return story;
 }
 
-// getv variants from pages
+// get variants from pages
 function getVariants(url, result) {
   let variants = "";
   if (url.includes("series")) {
     result.stories.items === undefined
-      ? (variants = "No description displayed")
+      ? (variants = "No variant available")
       : (variants = result.stories.items.map((item) => item.resourceURI));
   } else {
     variants = result.variants;
-    variants == ""
+    variants == []
       ? (variants = "No variant available")
       : (variants = result.variants.map((variant) => variant.resourceURI));
   }
@@ -116,7 +117,26 @@ const fetchVariants = async (rawUrl) => {
   let url = `${rawUrl}?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
   const data = await fetch(url);
   const response = await data.json();
-  console.log(response);
+  let result = response.data.results[0];
+  let { title, thumbnail, id } = result;
+  const classes = {
+    parent: "variant",
+    figure: "variant-image",
+    header: "variant-desc",
+  };
+  if (thumbnail === null) {
+    const thumbnails = [
+      "https://static.vecteezy.com/system/resources/previews/003/586/230/non_2x/no-photo-sign-sticker-with-text-inscription-on-isolated-background-free-vector",
+      "./assets/image not available",
+      "./assets/photo coming soon",
+      "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available",
+    ];
+    let imgLength = Math.floor(Math.random() * thumbnails.length);
+    thumbnail = { path: thumbnails[imgLength], extension: "jpg" };
+  } else {
+    return thumbnail;
+  }
+  loopComic(variantsContainer, thumbnail, title, id, classes);
 };
 
 // making a function for readComic content
@@ -226,55 +246,61 @@ const allComic = async (url) => {
 };
 // fetching individual comics
 const getIndividualData = async () => {
-  // assigning variables to empty strings
-  let participant = "";
-  let INDIVIDUALURL = "";
+  try {
+    // assigning variables to empty strings
+    let participant = "";
+    let INDIVIDUALURL = "";
 
-  // getting id & location from session storage
-  let retrivedId = sessionStorage.getItem("animeId");
-  let prevLocation = sessionStorage.getItem("location");
+    // getting id & location from session storage
+    let retrivedId = sessionStorage.getItem("animeId");
+    let prevLocation = sessionStorage.getItem("location");
 
-  // validating which page to fetch data for
-  prevLocation.includes("index") // fetching api via id
-    ? (INDIVIDUALURL = `https://gateway.marvel.com/v1/public/comics/${retrivedId}?ts=${ts}&apikey=${publicKey}&hash=${hash}`)
-    : prevLocation.includes("Comic")
-    ? (INDIVIDUALURL = `https://gateway.marvel.com/v1/public/comics/${retrivedId}?ts=${ts}&apikey=${publicKey}&hash=${hash}`)
-    : (INDIVIDUALURL = `https://gateway.marvel.com/v1/public/series/${retrivedId}?ts=${ts}&apikey=${publicKey}&hash=${hash}`);
-  const url = await fetch(INDIVIDUALURL);
-  const output = await url.json();
-  const result = output.data.results[0];
-  // remove loader
-  document.querySelector(".load").remove();
-  // getting image
-  let bg = document.querySelector(".body");
-  let imgSrc = `${result.thumbnail.path}.${result.thumbnail.extension}`;
-  bg.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.7),rgba(0,0,0,0.7)),url(${imgSrc})`;
+    // validating which page to fetch data for
+    prevLocation.includes("index") // fetching api via id
+      ? (INDIVIDUALURL = `https://gateway.marvel.com/v1/public/comics/${retrivedId}?ts=${ts}&apikey=${publicKey}&hash=${hash}`)
+      : prevLocation.includes("Comic")
+      ? (INDIVIDUALURL = `https://gateway.marvel.com/v1/public/comics/${retrivedId}?ts=${ts}&apikey=${publicKey}&hash=${hash}`)
+      : (INDIVIDUALURL = `https://gateway.marvel.com/v1/public/series/${retrivedId}?ts=${ts}&apikey=${publicKey}&hash=${hash}`);
+    const url = await fetch(INDIVIDUALURL);
+    const output = await url.json();
+    const result = output.data.results[0];
+    // remove loader
+    document.querySelector(".load").remove();
+    // getting image
+    let bg = document.querySelector(".body");
+    let imgSrc = `${result.thumbnail.path}.${result.thumbnail.extension}`;
+    bg.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.7),rgba(0,0,0,0.7)),url(${imgSrc})`;
 
-  let variants = getVariants(INDIVIDUALURL, result);
-  if (Array.isArray(variants)) {
-    variants.map((variant) => fetchVariants(variant));
-  }
+    let variants = getVariants(INDIVIDUALURL, result);
+    if (Array.isArray(variants)) {
+      variants.map((variant) => fetchVariants(variant));
+    } else {
+      return variants;
+    }
 
-  // getting  title
-  let title = result.title;
+    // getting  title
+    let title = result.title;
 
-  // getting story
-  let story = diffStories(INDIVIDUALURL, result);
+    // getting story
+    let story = diffStories(INDIVIDUALURL, result);
 
-  // getting creators
-  let creators = result.creators.items;
-  creators[0] == undefined
-    ? (participant += `<section>No creator displayed</section>`)
-    : getCreators();
-  function getCreators() {
-    creators.forEach((creator) => {
-      participant += `<section>
+    // getting creators
+    let creators = result.creators.items;
+    creators[0] == undefined
+      ? (participant += `<section>No creator displayed</section>`)
+      : getCreators();
+    function getCreators() {
+      creators.forEach((creator) => {
+        participant += `<section>
       <h3>${creator.role}</h3>
       <p>${creator.name}</p>
       </section>`;
-    });
+      });
+    }
+    readComicContent(readerContent, title, participant, story);
+  } catch {
+    document.querySelector(".load").textContent = "Unable to get data";
   }
-  readComicContent(readerContent, title, participant, story);
 };
 
 // Fetching different data for different page
