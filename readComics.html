@@ -9,13 +9,8 @@
   </head>
   <body class="body">
     <section
-      class="home"
-      style="
-        background-color: transparent;
-        padding-bottom: 2em;
-        height: 100vh;
-        overflow-y: auto;
-      "
+      class="home scroll"
+      style="background-color: transparent; margin-bottom: 2em; height: 100%"
     >
       <header>
         <section class="title">
@@ -32,8 +27,12 @@
       </header>
       <div class="load">Loading<span>.</span><span>.</span><span>.</span></div>
       <section class="readerContent"></section>
+      <section id="vary"></section>
     </section>
     <section class="variants-root">
+      <h1 style="color: #171717; font-size: 3em; text-align: center">
+        View variants
+      </h1>
       <section class="variants-container"></section>
     </section>
     <script src="index.js"></script>
