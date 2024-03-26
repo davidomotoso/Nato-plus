@@ -88,10 +88,8 @@ function diffStories(url, result) {
   let story = "";
   if (url.includes("comics")) {
     result.textObjects[0] === undefined
-      ? (story = "No description displayed")
+      ? (story = "No description found")
       : (story = result.textObjects[0].text);
-  } else {
-    story = "No description displayed";
   }
   return story;
 }
@@ -133,15 +131,13 @@ const fetchVariants = async (rawUrl) => {
     ];
     let imgLength = Math.floor(Math.random() * thumbnails.length);
     thumbnail = { path: thumbnails[imgLength], extension: "jpg" };
-  } else {
-    return thumbnail;
   }
   loopComic(variantsContainer, thumbnail, title, id, classes);
 };
 
 // making a function for readComic content
 function readComicContent(content, title, participant, story) {
-  content.innerHTML = `
+  content.innerHTML += `
     <section>
       <h2>${title}</h2>
       </section>
@@ -217,6 +213,17 @@ function err() {
   `;
 }
 
+// checking if variants exist and outputing a message if they don't
+const checkVariant = (variants) => {
+  let vary = document.getElementById("vary");
+  if (variants == "") {
+    vary.innerText = "No variants found";
+    document.querySelector(".variants-root").remove();
+  } else {
+    vary.remove();
+  }
+};
+
 // fetching data for 20 comics
 const allComic = async (url) => {
   try {
@@ -272,10 +279,9 @@ const getIndividualData = async () => {
     bg.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.7),rgba(0,0,0,0.7)),url(${imgSrc})`;
 
     let variants = getVariants(INDIVIDUALURL, result);
+    checkVariant(variants);
     if (Array.isArray(variants)) {
       variants.map((variant) => fetchVariants(variant));
-    } else {
-      return variants;
     }
 
     // getting  title
@@ -287,11 +293,11 @@ const getIndividualData = async () => {
     // getting creators
     let creators = result.creators.items;
     creators[0] == undefined
-      ? (participant += `<section>No creator displayed</section>`)
+      ? (participant = `<section>No creators found</section>`)
       : getCreators();
     function getCreators() {
       creators.forEach((creator) => {
-        participant += `<section>
+        participant = `<section>
       <h3>${creator.role}</h3>
       <p>${creator.name}</p>
       </section>`;
@@ -299,7 +305,8 @@ const getIndividualData = async () => {
     }
     readComicContent(readerContent, title, participant, story);
   } catch {
-    document.querySelector(".load").textContent = "Unable to get data";
+    document.querySelector(".load").textContent =
+      "Unable to get data. Check your internet connection";
   }
 };
 

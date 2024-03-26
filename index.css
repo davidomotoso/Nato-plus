@@ -42,6 +42,12 @@ header ul li > a:hover {
   display: none;
   cursor: pointer;
 }
+.scroll {
+  overflow-y: auto;
+}
+.scroll::-webkit-scrollbar {
+  display: none;
+}
 .err-img {
   height: 100vh;
   padding: 0;
@@ -165,6 +171,7 @@ header ul li > a:hover {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: 10% 40%;
+  width: 100%;
 }
 .readerContent {
   width: 37em;
@@ -178,6 +185,10 @@ header ul li > a:hover {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 1.4em;
+}
+#vary {
+  font-size: 1.2em;
+  padding-bottom: 1.5em !important;
 }
 .variants-root {
   background-color: #eeeeee;
@@ -201,8 +212,11 @@ header ul li > a:hover {
 }
 .variant-image {
   transition: 300ms;
+  width: inherit;
 }
 .variant-image > img {
+  object-position: 0 32%;
+  width: 100%;
   object-fit: cover;
   height: 20em;
   box-shadow: 0 0 10px 2px #1f1f1f;
@@ -226,7 +240,6 @@ header ul li > a:hover {
   .anime-content > section {
     width: 100%;
   }
-
   /* Intro page styling */
   .anime-content > section {
     display: grid;
@@ -267,7 +280,8 @@ header ul li > a:hover {
     width: 25em;
   }
   /* readContent style */
-  .readerContent {
+  .readerContent,
+  #vary {
     padding: 0 1em;
   }
 }
@@ -328,7 +342,8 @@ header ul li > a:hover {
     margin-top: 3em;
   }
   /* readContent style */
-  .readerContent {
+  .readerContent,
+  #vary {
     width: 100%;
   }
 }
@@ -368,7 +383,8 @@ header ul li > a:hover {
     height: 100%;
   }
   /* readContent style */
-  .readerContent {
+  .readerContent,
+  #vary {
     padding: 0;
   }
 }
