@@ -127,7 +127,7 @@ const fetchVariants = async (rawUrl) => {
       "https://static.vecteezy.com/system/resources/previews/003/586/230/non_2x/no-photo-sign-sticker-with-text-inscription-on-isolated-background-free-vector",
       "./assets/image not available",
       "./assets/photo coming soon",
-      "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available",
+      "https://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available",
     ];
     let imgLength = Math.floor(Math.random() * thumbnails.length);
     thumbnail = { path: thumbnails[imgLength], extension: "jpg" };
@@ -281,7 +281,10 @@ const getIndividualData = async () => {
     let variants = getVariants(INDIVIDUALURL, result);
     checkVariant(variants);
     if (Array.isArray(variants)) {
-      variants.map((variant) => fetchVariants(variant));
+      variants.map((variant) => {
+        let newVariant = `https${variant.slice(4)}`;
+        fetchVariants(newVariant);
+      });
     }
 
     // getting  title
