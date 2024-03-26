@@ -188,6 +188,7 @@ header ul li > a:hover {
 }
 #vary {
   font-size: 1.2em;
+  padding-top: 2.5em !important;
   padding-bottom: 1.5em !important;
 }
 .variants-root {

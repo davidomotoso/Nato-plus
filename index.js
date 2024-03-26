@@ -124,13 +124,19 @@ const fetchVariants = async (rawUrl) => {
   };
   if (thumbnail === null) {
     const thumbnails = [
-      "https://static.vecteezy.com/system/resources/previews/003/586/230/non_2x/no-photo-sign-sticker-with-text-inscription-on-isolated-background-free-vector",
-      "./assets/image not available",
-      "./assets/photo coming soon",
-      "https://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available",
+      { path: "./assets/Image-Not-Found-1", extension: "png" },
+      { path: "./assets/Image-Not-Found-2", extension: "png" },
+      { path: "./assets/Image-Not-Found-3", extension: "png" },
+      { path: "./assets/Image-Not-Found-4", extension: "png" },
+      { path: "./assets/Image-Not-Found-5", extension: "png" },
+      { path: "./assets/Image-Not-Found-6", extension: "png" },
+      {
+        path: "https://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available",
+        extension: "jpg",
+      },
     ];
     let imgLength = Math.floor(Math.random() * thumbnails.length);
-    thumbnail = { path: thumbnails[imgLength], extension: "jpg" };
+    thumbnail = thumbnails[imgLength];
   }
   loopComic(variantsContainer, thumbnail, title, id, classes);
 };
