@@ -15,6 +15,8 @@ const comicLoader = document.querySelector(".comic-loader");
 const series = document.querySelector(".series");
 const readerContent = document.querySelector(".readerContent");
 const variantsContainer = document.querySelector(".variants-container");
+const selectVariants = document.getElementById("variants");
+const selectStories = document.getElementById("stories");
 
 // Declaring empty variable to be used later
 let html = "";
@@ -90,24 +92,34 @@ function diffStories(url, result) {
     result.textObjects[0] === undefined
       ? (story = "No description found")
       : (story = result.textObjects[0].text);
+  } else {
+    story = "No description found";
   }
   return story;
 }
 
-// get variants from pages
-function getVariants(url, result) {
+// get variants from webpage
+function getVariants(result) {
   let variants = "";
-  if (url.includes("series")) {
-    result.stories.items === undefined
-      ? (variants = "No variant available")
-      : (variants = result.stories.items.map((item) => item.resourceURI));
-  } else {
-    variants = result.variants;
-    variants == []
-      ? (variants = "No variant available")
-      : (variants = result.variants.map((variant) => variant.resourceURI));
-  }
+  // if (url.includes("series")) {
+  result.variants === "" || result.variants === undefined
+    ? (variants = "No variant available")
+    : (variants = result.variants.map((item) => item.resourceURI));
+  // } else {
+  //   variants = result.variants;
+  //   variants == []
+  //     ? (variants = "No variant available")
+  //     : (variants = result.variants.map((variant) => variant.resourceURI));
+  // }
   return variants;
+}
+
+function getStories(result) {
+  let variedStories = "";
+  result.stories.items === undefined
+    ? (variedStories = "No variant available")
+    : (variedStories = result.stories.items.map((item) => item.resourceURI));
+  return variedStories;
 }
 
 // fetch variants
@@ -143,6 +155,7 @@ const fetchVariants = async (rawUrl) => {
 
 // making a function for readComic content
 function readComicContent(content, title, participant, story) {
+  document.title = `${title} | Story`;
   content.innerHTML += `
     <section>
       <h2>${title}</h2>
@@ -190,6 +203,29 @@ const topAnime = async () => {
   }
 };
 
+// function for change in selectVariants
+function changeInSelectVariants(fetchVariants) {
+  selectVariants.addEventListener("change", () => {
+    if (selectVariants.checked == true) {
+      fetchVariants;
+    } else {
+      let clearVariants = "";
+      checkVariant(clearVariants);
+    }
+  });
+}
+// function for change in selectStories
+function changeInSelectStories(fetchVariants) {
+  selectStories.addEventListener("change", () => {
+    if (selectStories.checked == true) {
+      fetchVariants;
+    } else {
+      let clearVariants = "";
+      checkVariant(clearVariants);
+    }
+  });
+}
+
 const loopComic = (parentComponent, src, heading, id, classes) => {
   const { parent, figure, header } = classes;
   content += `
@@ -221,12 +257,12 @@ function err() {
 
 // checking if variants exist and outputing a message if they don't
 const checkVariant = (variants) => {
-  let vary = document.getElementById("vary");
+  let noVariant = document.getElementById("no-variant");
   if (variants == "") {
-    vary.innerText = "No variants found";
+    noVariant.innerText = "No variants found";
     document.querySelector(".variants-root").remove();
   } else {
-    vary.remove();
+    noVariant.remove();
   }
 };
 
@@ -259,6 +295,7 @@ const allComic = async (url) => {
 };
 // fetching individual comics
 const getIndividualData = async () => {
+  let indivComImg = document.getElementById("cover");
   try {
     // assigning variables to empty strings
     let participant = "";
@@ -277,24 +314,36 @@ const getIndividualData = async () => {
     const url = await fetch(INDIVIDUALURL);
     const output = await url.json();
     const result = output.data.results[0];
+
     // remove loader
     document.querySelector(".load").remove();
+
     // getting image
     let bg = document.querySelector(".body");
-    let imgSrc = `${result.thumbnail.path}.${result.thumbnail.extension}`;
-    bg.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.7),rgba(0,0,0,0.7)),url(${imgSrc})`;
 
-    let variants = getVariants(INDIVIDUALURL, result);
-    checkVariant(variants);
-    if (Array.isArray(variants)) {
-      variants.map((variant) => {
-        let newVariant = `https${variant.slice(4)}`;
-        fetchVariants(newVariant);
-      });
+    // Implementing images to background
+    let imgSrc = `${result.thumbnail.path}.${result.thumbnail.extension}`;
+    bg.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.75),rgba(0,0,0,0.7)),url(${imgSrc})`;
+
+    let variants = getVariants(result);
+    let stories = getStories(result);
+
+    function mapItems(variants) {
+      if (Array.isArray(variants)) {
+        variants.map((variant) => {
+          let newVariant = `https${variant.slice(4)}`;
+          fetchVariants(newVariant);
+        });
+      }
     }
+    changeInSelectVariants(mapItems(variants));
+    changeInSelectStories(mapItems(stories));
 
     // getting  title
     let title = result.title;
+
+    // attaching title and imgSrc to indivComImg
+    indivComImg.innerHTML = `<img class="com-img" src="${imgSrc}" alt="${title}" loading="lazy" />`;
 
     // getting story
     let story = diffStories(INDIVIDUALURL, result);
@@ -306,7 +355,7 @@ const getIndividualData = async () => {
       : getCreators();
     function getCreators() {
       creators.forEach((creator) => {
-        participant = `<section>
+        participant += `<section>
       <h3>${creator.role}</h3>
       <p>${creator.name}</p>
       </section>`;

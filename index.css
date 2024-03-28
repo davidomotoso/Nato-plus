@@ -172,9 +172,20 @@ header ul li > a:hover {
   background-attachment: fixed;
   background-position: 10% 40%;
   width: 100%;
+  backdrop-filter: blur(15px);
+}
+#content-container {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.com-img {
+  width: 33em;
+  height: 100%;
 }
 .readerContent {
-  width: 37em;
+  width: 35em;
   display: grid;
   row-gap: 2.5em;
   font-size: 1.1em;
@@ -184,15 +195,28 @@ header ul li > a:hover {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 1.4em;
+  gap: 2.5em;
 }
-#vary {
+#no-variant {
   font-size: 1.2em;
   padding-top: 2.5em !important;
   padding-bottom: 1.5em !important;
 }
 .variants-root {
   background-color: #eeeeee;
+}
+.variants-root div {
+  padding-top: 10px;
+  padding-left: 2em;
+}
+.variants-root div label {
+  color: #1f1f1f;
+  font-weight: 600;
+  accent-color: red;
+  padding-right: 15px;
+}
+.variants-root div label input {
+  margin-right: 4px;
 }
 .variants-container {
   width: 75em;
@@ -281,9 +305,12 @@ header ul li > a:hover {
     width: 25em;
   }
   /* readContent style */
-  .readerContent,
-  #vary {
-    padding: 0 1em;
+  #content-container {
+    justify-content: center;
+    row-gap: 2em;
+  }
+  .com-img {
+    width: 100%;
   }
 }
 
@@ -344,8 +371,9 @@ header ul li > a:hover {
   }
   /* readContent style */
   .readerContent,
-  #vary {
+  #no-variant {
     width: 100%;
+    padding: 0 6vw;
   }
 }
 @media only screen and (max-width: 450px) {
@@ -385,7 +413,7 @@ header ul li > a:hover {
   }
   /* readContent style */
   .readerContent,
-  #vary {
+  #no-variant {
     padding: 0;
   }
 }

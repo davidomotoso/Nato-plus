@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Story</title>
+    <title></title>
     <meta name="description" content="Page for reading details of comic" />
     <link rel="stylesheet" href="index.css" />
     <link rel="stylesheet" href="loader.css" />
     <style></style>
   </head>
   <body class="body">
+    <!-- Home container -->
     <section
       class="home scroll"
-      style="background-color: transparent; margin-bottom: 2em; height: 100%"
+      style="background-color: transparent; padding-bottom: 2em; height: 100%"
     >
       <header>
         <section class="title">
@@ -25,11 +26,30 @@
           </ul>
         </nav>
       </header>
+      <!-- loader container -->
       <div class="load">Loading<span>.</span><span>.</span><span>.</span></div>
-      <section class="readerContent"></section>
-      <section id="vary"></section>
+      <!-- Comic info container -->
+      <section id="content-container">
+        <!-- Image for the cover -->
+        <figure id="cover"></figure>
+        <div>
+          <!-- Read content section -->
+          <section class="readerContent"></section>
+          <!-- Section for No Variants -->
+          <section id="no-variant"></section>
+        </div>
+      </section>
     </section>
     <section class="variants-root">
+      <div>
+        <label for="variant"
+          ><input type="checkbox" name="Variants" id="variants" checked />SHOW
+          VARIANTS</label
+        >
+        <label for="stories">
+          <input type="checkbox" name="Stories" id="stories" />SHOW STORIES
+        </label>
+      </div>
       <h1 style="color: #171717; font-size: 3em; text-align: center">
         View variants
       </h1>
